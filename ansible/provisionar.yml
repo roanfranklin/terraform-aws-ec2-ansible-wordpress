@@ -1,4 +1,5 @@
 - hosts: all
+  gather_facts: no # important
   handlers:
     - name: "restart apache"
       service:
@@ -6,8 +7,8 @@
         state: restarted
       become: yes
   tasks:
-    # - name: "Criando um arquivo a toa no servidor"
-    #   shell: "echo 'escrevendo algo no servidor' >> teste.txt"
+    - name: Wait for system to become reachable
+      wait_for_connection:
 
     - name: "Autoremove unused dependency packages"
       apt:
